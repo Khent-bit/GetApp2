@@ -6,39 +6,73 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="370dp"
+        android:layout_width="390dp"
         android:layout_height="170dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/task_bg"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TableLayout
-            android:layout_width="121dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TableRow
-                android:layout_width="162dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="80dp"
+            <CheckBox
+                android:id="@+id/checkBox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <LinearLayout
+                android:layout_width="140dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/taskname_bg"
-                android:minWidth="70dp"
-                android:minHeight="30dp" />
+                android:orientation="horizontal">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Task Name"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            </LinearLayout>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </TableLayout>
+            <TextView
+                android:layout_width="114dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="13dp"
+                android:text="priority level"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="65dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:text="Due Date" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="227dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="15dp"
+            android:text="Description" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
