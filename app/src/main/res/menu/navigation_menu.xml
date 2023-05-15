@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item android:title="Menu">
+            <menu>
+
+                <item
+                    android:id="@+id/mTasks"
+                    android:icon="@drawable/ic_tasks"
+                    android:title="Tasks" />
+
+                <item
+                    android:id="@+id/mindMap"
+                    android:icon="@drawable/ic_mindmap"
+                    android:title="Mind Map" />
+
+                <item
+                    android:id="@+id/maps"
+                    android:icon="@drawable/ic_map"
+                    android:title="Map" />
+
+                <item
+                    android:id="@+id/mRate"
+                    android:icon="@drawable/ic_rate"
+                    android:title="Rate Me" />
+
+            </menu>
+
+        </item>
+
+    </group>
+
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+        <item android:title="More">
+
+            <menu>
+                <item
+                    android:id="@+id/shareapp"
+                    android:icon="@drawable/ic_send"
+                    android:title="Share App" />
+
+                <item
+                    android:id="@+id/Policy"
+                    android:icon="@drawable/ic_policy"
+                    android:title="Policy" />
+            </menu>
+
+        </item>
+
+    </group>
+</menu>
