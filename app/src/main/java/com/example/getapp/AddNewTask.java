@@ -40,36 +40,26 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private EditText mTaskEdit;
     private Button saveBtn;
     private Button cancelBtn;
-    private RadioGroup radioGroup;
-    private RadioButton radioButton;
     private FirebaseFirestore firestore;
     private Context context;
     private String duedate = "";
+
+    private RadioButton lowBtn;
+    private RadioButton mediumBtn;
+    private RadioButton highBtn;
+    private String priority;
 
     public static AddNewTask newInstance(){
         return new AddNewTask();
     }
 
-    public String checkBtn(){
-        radioGroup = radioGroup.findViewById(R.id.radioGroup);
-        int radioId = radioGroup.getCheckedRadioButtonId();
-        radioButton = getView().findViewById(radioId);
 
-        if(radioButton.getText().toString() == "Low"){
-            return "Low";
-        }else if(radioButton.getText().toString() == "Medium"){
-            return "Medium";
-        }else{
-            return "High";
-        }
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.layout_addtask, container, false);
+        return inflater.inflate(R.layout.layout_addtask, container, true);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -79,7 +69,19 @@ public class AddNewTask extends BottomSheetDialogFragment {
         mTaskEdit = view.findViewById(R.id.editTextTextPersonName);
         saveBtn = view.findViewById(R.id.addbtn);
         cancelBtn = view.findViewById(R.id.cancelbtn);
+        lowBtn = view.findViewById(R.id.lowbtn);
+        mediumBtn = view.findViewById(R.id.mediumbtn);
+        highBtn = view.findViewById(R.id.highbtn);
         firestore = FirebaseFirestore.getInstance();
+
+
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         mTaskEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -88,7 +90,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.toString().equals(" ")) {
+                if (charSequence.toString().equals("")) {
                     saveBtn.setEnabled(false);
                     saveBtn.setBackgroundResource(R.drawable.btn_disabled);
                 } else {
@@ -131,9 +133,21 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 if (task.isEmpty()) {
                     Toast.makeText(context, "Empty Task is not allowed", Toast.LENGTH_SHORT).show();
                 } else {
+                    if(lowBtn.isChecked()){
+                        priority = "Low";
+                        Toast.makeText(context, "Priority is set to low", Toast.LENGTH_SHORT).show();
+                    }else if(mediumBtn.isChecked()){
+                        priority = "Medium";
+                        Toast.makeText(context, "Priority is set to medium", Toast.LENGTH_SHORT).show();
+                    }else if(highBtn.isChecked()){
+                        priority = "High";
+                        Toast.makeText(context, "Priority is set to high", Toast.LENGTH_SHORT).show();
+                    }else{
+                        priority = "No priority level selected";
+                        Toast.makeText(context, "None priority", Toast.LENGTH_SHORT).show();
+                    }
 
                     Map<String, Object> taskMap = new HashMap<>();
-                    String priority = checkBtn();
                     taskMap.put("task", task);
                     taskMap.put("due", duedate);
                     taskMap.put("priority", priority);

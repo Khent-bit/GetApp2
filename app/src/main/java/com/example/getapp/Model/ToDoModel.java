@@ -1,0 +1,24 @@
+package com.example.getapp.Model;
+
+import kotlinx.coroutines.scheduling.Task;
+
+public class ToDoModel extends TaskId {
+    private String task, due, priority;
+    private int status;
+
+    public String getTask() {
+        return task;
+    }
+
+    public String getDue() {
+        return due;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+}

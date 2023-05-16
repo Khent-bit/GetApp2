@@ -3,16 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_gravity="center_horizontal"
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="390dp"
+        android:layout_width="370dp"
         android:layout_height="170dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/task_bg"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -37,6 +38,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/taskName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -47,24 +49,25 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/priority"
                 android:layout_width="114dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="13dp"
-                android:text="priority level"/>
+                android:text="priority level" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/dueDate"
             android:layout_width="200dp"
             android:layout_height="20dp"
             android:layout_marginLeft="65dp"
-            android:textStyle="bold"
             android:layout_marginTop="10dp"
-            android:textSize="17sp"
+            android:text="Due Date"
             android:textColor="@color/black"
-            android:text="Due Date" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView2"

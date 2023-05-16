@@ -13,13 +13,13 @@
         >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
             android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
             android:layout_height="758dp"
             android:layout_below="@+id/appBar"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="36dp" />
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
 
         <LinearLayout
             android:id="@+id/appBar"
