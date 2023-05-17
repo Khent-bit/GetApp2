@@ -6,10 +6,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.example.getapp.Model.ToDoModel;
 
@@ -33,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnDialogCloseListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private ToDoAdapter adapter;
     private List<ToDoModel> mList;
+    private Query query;
+    private ListenerRegistration listenerRegistration;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -70,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
         });
         mList = new ArrayList<>();
         adapter = new ToDoAdapter(MainActivity.this, mList);
-
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TouchHelper(adapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(adapter);
         showData();
 
@@ -127,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showData(){
-        firestore.collection("task").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        query = firestore.collection("task").orderBy("time", Query.Direction.DESCENDING);
+        listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for(DocumentChange documentChange : value.getDocumentChanges()){
@@ -139,8 +147,15 @@ public class MainActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     }
                 }
-                Collections.reverse(mList);
+                listenerRegistration.remove();
             }
         });
+    }
+
+    @Override
+    public void onDialogClose(DialogInterface dialogInterface) {
+        mList.clear();
+        showData();
+        adapter.notifyDataSetChanged();
     }
 }

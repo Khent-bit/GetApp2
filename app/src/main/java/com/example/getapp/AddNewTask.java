@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,6 +29,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -48,7 +50,9 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private RadioButton mediumBtn;
     private RadioButton highBtn;
     private String priority;
-
+    private String id = "";
+    private String duedateUpdate = "";
+    private EditText description;
     public static AddNewTask newInstance(){
         return new AddNewTask();
     }
@@ -72,9 +76,27 @@ public class AddNewTask extends BottomSheetDialogFragment {
         lowBtn = view.findViewById(R.id.lowbtn);
         mediumBtn = view.findViewById(R.id.mediumbtn);
         highBtn = view.findViewById(R.id.highbtn);
+        description = view.findViewById(R.id.editTextTextMultiLine);
         firestore = FirebaseFirestore.getInstance();
 
 
+        boolean isUpdate = false;
+
+        final Bundle bundle = getArguments();
+        if(bundle != null){
+            isUpdate = true;
+            String task = bundle.getString("task");
+            id = bundle.getString("id");
+            duedateUpdate = bundle.getString("due");
+
+            mTaskEdit.setText(task);
+            setDueDate.setText(duedate);
+
+            if(task.length() > 0){
+                saveBtn.setEnabled(false);
+                saveBtn.setBackgroundResource(R.drawable.btn_disabbled);
+            }
+        }
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,49 +147,59 @@ public class AddNewTask extends BottomSheetDialogFragment {
             }
         });
 
+        boolean finalIsUpdate = isUpdate;
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String task = mTaskEdit.getText().toString();
+                String desc = description.getText().toString();
 
-                if (task.isEmpty()) {
-                    Toast.makeText(context, "Empty Task is not allowed", Toast.LENGTH_SHORT).show();
-                } else {
-                    if(lowBtn.isChecked()){
-                        priority = "Low";
-                        Toast.makeText(context, "Priority is set to low", Toast.LENGTH_SHORT).show();
-                    }else if(mediumBtn.isChecked()){
-                        priority = "Medium";
-                        Toast.makeText(context, "Priority is set to medium", Toast.LENGTH_SHORT).show();
-                    }else if(highBtn.isChecked()){
-                        priority = "High";
-                        Toast.makeText(context, "Priority is set to high", Toast.LENGTH_SHORT).show();
-                    }else{
-                        priority = "No priority level selected";
-                        Toast.makeText(context, "None priority", Toast.LENGTH_SHORT).show();
-                    }
+                if(finalIsUpdate){
+                    firestore.collection("task").document(id).update("task", task, "due", duedate, "description", desc);
+                    Toast.makeText(context, "Task Updated", Toast.LENGTH_SHORT).show();
 
-                    Map<String, Object> taskMap = new HashMap<>();
-                    taskMap.put("task", task);
-                    taskMap.put("due", duedate);
-                    taskMap.put("priority", priority);
-                    taskMap.put("status", 0);
+                }else {
+                    if (task.isEmpty()) {
+                        Toast.makeText(context, "Empty Task is not allowed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (lowBtn.isChecked()) {
+                            priority = "Low";
+                            Toast.makeText(context, "Priority is set to low", Toast.LENGTH_SHORT).show();
+                        } else if (mediumBtn.isChecked()) {
+                            priority = "Medium";
+                            Toast.makeText(context, "Priority is set to medium", Toast.LENGTH_SHORT).show();
+                        } else if (highBtn.isChecked()) {
+                            priority = "High";
+                            Toast.makeText(context, "Priority is set to high", Toast.LENGTH_SHORT).show();
+                        } else {
+                            priority = "No priority level selected";
+                            Toast.makeText(context, "None priority", Toast.LENGTH_SHORT).show();
+                        }
 
-                    firestore.collection("task").add(taskMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(context, "Task Saved", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Map<String, Object> taskMap = new HashMap<>();
+                        taskMap.put("task", task);
+                        taskMap.put("due", duedate);
+                        taskMap.put("priority", priority);
+                        taskMap.put("status", 0);
+                        taskMap.put("description", desc);
+                        taskMap.put("time", FieldValue.serverTimestamp());
+
+                        firestore.collection("task").add(taskMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(context, "Task Saved", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
                 dismiss();
             }
