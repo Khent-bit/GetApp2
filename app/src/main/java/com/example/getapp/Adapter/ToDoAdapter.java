@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.getapp.AddNewTask;
+import com.example.getapp.EditNewTask;
 import com.example.getapp.MainActivity;
 import com.example.getapp.Model.ToDoModel;
 import com.example.getapp.R;
@@ -60,7 +61,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         bundle.putString("priority", toDoModel.getPriority());
         bundle.putString("id", toDoModel.TaskId);
 
-        AddNewTask addNewTask = new AddNewTask();
+        EditNewTask addNewTask = new EditNewTask();
         addNewTask.setArguments(bundle);
         addNewTask.show(activity.getSupportFragmentManager(), addNewTask.getTag());
     }

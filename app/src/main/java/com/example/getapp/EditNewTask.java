@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,13 +14,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.viewpager.widget.PagerAdapter;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,7 +32,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddNewTask extends BottomSheetDialogFragment {
+public class EditNewTask extends BottomSheetDialogFragment {
     public static final String TAG = "AddNewTask";
     private TextView setDueDate;
     private EditText mTaskEdit;
@@ -53,8 +49,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private String id = "";
     private String duedateUpdate = "";
     private EditText description;
-    public static AddNewTask newInstance(){
-        return new AddNewTask();
+    public static EditNewTask newInstance(){
+        return new EditNewTask();
     }
 
 
@@ -62,7 +58,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.layout_addtask, container, true);
+        return inflater.inflate(R.layout.layout_edittask, container, true);
     }
 
     @Override
