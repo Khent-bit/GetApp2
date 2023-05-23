@@ -8,6 +8,7 @@
 
     <LinearLayout
         android:layout_width="370dp"
+        android:id="@+id/taskInstance"
         android:layout_height="170dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/task_bg"

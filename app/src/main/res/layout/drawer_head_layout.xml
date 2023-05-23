@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_marginBottom="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="40dp"
         android:id="@+id/drawarHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-
-        <ImageView
-            android:layout_marginLeft="10dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/unknown_acc"
-            android:src="@drawable/ic_unknown_person"
-            />
 
         <LinearLayout
             android:layout_gravity="center"
@@ -26,35 +20,40 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/colorPrimary"
-                android:textStyle="bold"
-                android:text="Sign in now"
-                android:layout_marginLeft="10dp"
-                android:textSize="15sp"
-                />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#AE000000"
-                android:text="change account"
-                android:layout_marginLeft="10dp"
-                android:textSize="10sp"
-                />
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/txtName"
+                android:text="Sign in first"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <View
-        android:elevation="5dp"
-        android:layout_below="@id/drawarHeader"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_below="@id/drawarHeader"
+        android:layout_marginTop="40dp"
         android:background="#43000000"
-        />
+        android:elevation="5dp" />
+
+    <Button
+        android:id="@+id/signOut"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginEnd="26dp"
+        android:background="@drawable/btn_cancel"
+        android:text="Sign out >"
+        android:textStyle="italic" />
 
 </RelativeLayout>

@@ -13,15 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.getapp.Adapter.ToDoAdapter;
 import com.example.getapp.Model.ToDoModel;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.DocumentChange;
@@ -51,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements OnDialogCloseList
     private List<ToDoModel> mList;
     private Query query;
     private ListenerRegistration listenerRegistration;
+    private String name = "Sign in now!";
+
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,6 +78,15 @@ public class MainActivity extends AppCompatActivity implements OnDialogCloseList
         recyclerView = findViewById(R.id.recyclerView);
         nFab = findViewById(R.id.floatingActionButton2);
         firestore = FirebaseFirestore.getInstance();
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().build();
+        gsc = GoogleSignIn.getClient(this, gso);
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account != null) {
+            name = "Hi! \n" + account.getDisplayName();
+        }
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -85,10 +108,6 @@ public class MainActivity extends AppCompatActivity implements OnDialogCloseList
         toggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Drawar click event
-        // Drawer item Click event ------
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -117,20 +136,35 @@ public class MainActivity extends AppCompatActivity implements OnDialogCloseList
                 return false;
             }
         });
-        //------------------------------
-
-        // ------------------------
-        // App Bar Click Event
         imageMenu = findViewById(R.id.imageMenu);
 
         imageMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Code Here
+                TextView txtName = drawerLayout.findViewById(R.id.txtName);
+                Button logout = drawerLayout.findViewById(R.id.signOut);
+
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SignOut();
+                    }
+                });
+                txtName.setText(name);
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
+    }
+
+    private void SignOut() {
+        gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                finish();
+                startActivity(new Intent(getApplicationContext(), SignPage.class));
+            }
+        });
     }
 
     private void showData(){

@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -74,7 +76,6 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         holder.mPriority.setText(toDoModel.getPriority());
         holder.mCheckBox.setChecked(toBoolean(toDoModel.getStatus()));
         holder.mDescription.setText(toDoModel.getDescription());
-
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -85,7 +86,6 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
                 }
             }
         });
-
     }
 
     private boolean toBoolean(int status){
@@ -104,6 +104,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         CheckBox mCheckBox;
         TextView mPriority;
         TextView mDescription;
+
         public MyViewHolder(@NonNull View ItemView) {
             super(ItemView);
 
