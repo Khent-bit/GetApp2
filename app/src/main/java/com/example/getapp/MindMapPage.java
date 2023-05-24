@@ -42,7 +42,7 @@ public class MindMapPage extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     ImageView imageMenu;
 
-//    private RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private FloatingActionButton nFab;
     private FirebaseFirestore firestore;
     private MindMapAdapter adapter;
@@ -59,14 +59,14 @@ public class MindMapPage extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_View);
         imageMenu = findViewById(R.id.imageMenu);
-//        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         nFab = findViewById(R.id.floatingActionButton2);
         firestore = FirebaseFirestore.getInstance();
         mindmap1 = findViewById(R.id.mindmap1);
         mindmap2 = findViewById(R.id.mindmap2);
 
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(MindMapPage.this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MindMapPage.this));
 
         nFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,11 +74,11 @@ public class MindMapPage extends AppCompatActivity {
                 AddNewMindMap.newInstance().show(getSupportFragmentManager(), AddNewMindMap.TAG);
             }
         });
-//        mList = new ArrayList<>();
-//        adapter = new MindMapAdapter(MindMapPage.this, mList);
+        mList = new ArrayList<>();
+        adapter = new MindMapAdapter(MindMapPage.this, mList);
 
-//        recyclerView.setAdapter(adapter);
-//        showData();
+        recyclerView.setAdapter(adapter);
+        showData();
 
 
         toggle = new ActionBarDrawerToggle(MindMapPage.this, drawerLayout, R.string.open, R.string.close);
@@ -140,21 +140,21 @@ public class MindMapPage extends AppCompatActivity {
     }
 
 
-//    private void showData(){
-//        firestore.collection("mindmap").addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                for(DocumentChange documentChange : value.getDocumentChanges()){
-//                    if(documentChange.getType() == DocumentChange.Type.ADDED){
-//                        String id = documentChange.getDocument().getId();
-//                        MindMapModel mindMapModel = documentChange.getDocument().toObject(MindMapModel.class).withId(id);
-//
-//                        mList.add(mindMapModel);
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                }
-//                Collections.reverse(mList);
-//            }
-//        });
-//    }
+    private void showData(){
+        firestore.collection("mindmap").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for(DocumentChange documentChange : value.getDocumentChanges()){
+                    if(documentChange.getType() == DocumentChange.Type.ADDED){
+                        String id = documentChange.getDocument().getId();
+                        MindMapModel mindMapModel = documentChange.getDocument().toObject(MindMapModel.class).withId(id);
+
+                        mList.add(mindMapModel);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+                Collections.reverse(mList);
+            }
+        });
+    }
 }

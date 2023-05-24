@@ -130,7 +130,7 @@ public class AddNewMindMap extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 mapName = "Brace map";
-                map = ContextCompat.getDrawable(context, R.drawable.brace_map);
+//                map = ContextCompat.getDrawable(context, R.drawable.brace_map);
                 bubbleMap.setChecked(false);
                 circleMap.setChecked(false);
                 treeMap.setChecked(false);
@@ -141,7 +141,7 @@ public class AddNewMindMap extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 mapName = "Bubble map";
-                map = ContextCompat.getDrawable(context, R.drawable.bubble_map);
+//                map = ContextCompat.getDrawable(context, R.drawable.bubble_map);
                 braceMap.setChecked(false);
                 circleMap.setChecked(false);
                 treeMap.setChecked(false);
@@ -152,7 +152,7 @@ public class AddNewMindMap extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 mapName = "Circle map";
-                map = ContextCompat.getDrawable(context, R.drawable.circle_map);
+//                map = ContextCompat.getDrawable(context, R.drawable.circle_map);
                 braceMap.setChecked(false);
                 bubbleMap.setChecked(false);
                 treeMap.setChecked(false);
@@ -163,7 +163,7 @@ public class AddNewMindMap extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 mapName = "Tree map";
-                map = ContextCompat.getDrawable(context, R.drawable.tree_map);
+//                map = ContextCompat.getDrawable(context, R.drawable.tree_map);
                 braceMap.setChecked(false);
                 bubbleMap.setChecked(false);
                 circleMap.setChecked(false);
@@ -176,7 +176,7 @@ public class AddNewMindMap extends BottomSheetDialogFragment {
                 task = spinner.getSelectedItem().toString();
                 Map<String, Object> mindMap = new HashMap<>();
                 mindMap.put("task", task);
-                mindMap.put("map", map);
+//                mindMap.put("map", map);
 
                 firestore.collection("mindmap").add(mindMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
@@ -192,7 +192,7 @@ public class AddNewMindMap extends BottomSheetDialogFragment {
                             } else {
                                 intent = new Intent(getContext(), BraceMapActivity.class);
                             }
-                            startActivity(intent);
+//                            startActivity(intent);
                             Toast.makeText(context, "Creating new " + mapName, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();

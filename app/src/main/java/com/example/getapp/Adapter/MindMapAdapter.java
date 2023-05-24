@@ -82,20 +82,20 @@ public class MindMapAdapter extends RecyclerView.Adapter<MindMapAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView taskName;
-        AppCompatImageView map;
+//        AppCompatImageView map;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             taskName = itemView.findViewById(R.id.taskName);
-            map = itemView.findViewById(R.id.mindMapImg);
+//            map = itemView.findViewById(R.id.mindMapImg);
         }
 
         public void bindData(MindMapModel mindMapModel) {
             taskName.setText(mindMapModel.getTask());
 
             // Set the Drawable to the ImageView
-            map.setImageDrawable(mindMapModel.getMap());
+//            map.setImageDrawable(mindMapModel.getMap());
         }
     }
 }
