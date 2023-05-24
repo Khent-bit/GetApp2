@@ -32,7 +32,10 @@
         </activity>
         <activity
             android:name=".BraceMapActivity"
-            android:exported="true"/>
+            android:exported="false"/>
+        <activity
+            android:name=".BraceMapOutline"
+            android:exported="false"/>
     </application>
 
 </manifest>

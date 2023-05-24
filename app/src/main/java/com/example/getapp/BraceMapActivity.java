@@ -46,12 +46,17 @@ public class BraceMapActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.btnHome:
-                        Intent intentM = new Intent(BraceMapActivity.this, MindMapPage.class);
-                        startActivity(intentM);
+                        Intent intentH = new Intent(BraceMapActivity.this, MindMapPage.class);
+                        startActivity(intentH);
+                        drawerLayout.closeDrawers();
+                        break;
+                    case R.id.btnMindMap:
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.btnOutline:
-                        Toast.makeText(BraceMapActivity.this, "Showing Mind Maps", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BraceMapActivity.this, "Showing Outline Mode", Toast.LENGTH_SHORT).show();
+                        Intent intentO = new Intent(BraceMapActivity.this, BraceMapOutline.class);
+                        startActivity(intentO);
                         drawerLayout.closeDrawers();
                         break;
 
