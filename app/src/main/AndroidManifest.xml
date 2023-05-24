@@ -18,6 +18,9 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
+            android:name=".MindMapPage"
+            android:exported="false"/>
+        <activity
             android:name=".SplashPage"
             android:exported="true"
             android:theme="@style/Theme.Design.NoActionBar">
@@ -27,6 +30,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".BraceMapActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

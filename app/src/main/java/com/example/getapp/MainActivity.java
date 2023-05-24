@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements OnDialogCloseList
                         break;
                     case R.id.mindMap:
                         Toast.makeText(MainActivity.this, "Showing Mind Maps", Toast.LENGTH_SHORT).show();
-                        Intent intentM = new Intent(MainActivity.this, MainActivity.class);
+                        Intent intentM = new Intent(MainActivity.this, MindMapPage.class);
                         startActivity(intentM);
                         drawerLayout.closeDrawers();
                         break;
